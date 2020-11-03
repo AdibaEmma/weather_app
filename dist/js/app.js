@@ -1,11 +1,13 @@
 window.addEventListener("load", () => {
     let long // longitude
     let lat // latitude
+    
     let temperatureDegree = document.querySelector('.temperature-degree');
     let temperatureDescription = document.querySelector('.temperature-description');
     let locationTimezone = document.querySelector('.location-timezone');
-    let temperatureSection = document.querySelector('.temperature');
-    let temperatureSpan = document.querySelector('.temperature span');
+    let country = document.querySelector('.location-timezone span');
+    let temperatureSection = document.querySelector('.degree-section');
+    let temperatureSpan = document.querySelector('.degree-section span');
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -13,67 +15,50 @@ window.addEventListener("load", () => {
             lat = position.coords.latitude;
 
             const proxy = "https:cors-anywhere.herokuapp.com/";
-            const api = `${proxy}apiurl`;
+            const api = `${proxy}https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=21fcbd5f02de0ad45dddb98db8e31b71`;
 
-            fetch(`https://community-open-weather-map.p.rapidapi.com/weather?lat=${lat}&lon=${long}`, {
-	"method": "GET",
-	"headers": {
-        "x-Requested-With": "XMLHttpRequest",
-		"x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-		"x-rapidapi-key": "6f089d65aamsh96efc9842396e9dp1be7a3jsn28600c95e48b"
-	}
-})
-.then(res => {
-	console.log(res);
-})
-.catch(err => {
-	console.log(err);
-});
+            fetch(api)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    const temperature =  data.main.temp;
+                    const weather = data.weather[0].description;
+                    const timezone = data.name;
+                    const icon  = data.weather[0].icon;
+                    const country = data.sys.country;
+
+                    // Set DOM Elements from the API
+                    temperatureDegree.textContent = temperature;
+                    temperatureDescription.textContent = weather;
+                    locationTimezone.textContent = timezone;
+                    country.innerHTML = `, ${country}`;
+
+                    // Celsius calculation 
+                    let celsius = Math.floor((temperature - 32) * (5 / 9));
+
+                    // Set Icon
+                    document.querySelector('img').setAttribute("src", `http://openweathermap.org/img/wn/${icon}@2x.png`)
+
+                    // Change temperature to Celsius/Farenheit
+                    temperatureSection.addEventListener('click', () => {
+                        if (temperatureSpan.textContent === "F") {
+                            temperatureSpan.textContent = "C";
+                            temperatureDegree.textContent = celsius;
+                        } else {
+                            temperatureSpan.textContent = "F";
+                            temperatureDegree.textContent = temperature;
+                        }
+                    })
+                })
+            .catch(err => {
+                console.log(err);
+            });
 
         });
     } else {
-        document.querySelector('location-timezone').textContent =
-            "Please enable geolocation";
+        document.querySelector('location-timezone').innerHTML = "Please enable geolocation";
     }
 
-    // function setIcons(icon, iconID) {
-    //     const skycons = new skycons({ color: "white"});
-    //     const currentIcon = icon.replace(/-/g, "_").toUpperCase();
-    //     skycons.play();
-    //     return skycons.set(iconID, Skycons[currentIcon]);
-    // }
-
 });
-
-    // fetch(api)
-    //             .then(res => {
-    //                 return res.json();
-    //             })
-    //             .then(data => {
-    //                 const {
-    //                     temperature,
-    //                     summary,
-    //                     icon
-    //                 } = data.currently;
-
-    //                 // Set DOM Elements from the API
-    //                 temperatureDegree.textContent = temperature;
-    //                 temperatureDescription.textContent = summary;
-    //                 locationTimezone.textContent = data.timezone;
-
-    //                 // Celsius calculation 
-    //                 let celsius = (temperature - 32) * (5 / 9);
-
-    //                 // Set Icon
-    //                 setIcons(icon, document.querySelector('.icon'));
-
-    //                 // Change temperature to Celsius/Farenheit
-    //                 temperatureSection.addEventListener('click', () => {
-    //                     if(temperatureSpan.textContent === "F") {
-    //                         temperatureSpan.textContent = "C";
-    //                         temperatureDegree.textContent = celsius;
-    //                     } else {
-    //                         temperatureSpan.textContent = "F";
-    //                     }
-    //                 })
-    //             });
