@@ -27,3 +27,41 @@
 .degree-section h2 {
     font-size: 2.5rem;
 }
+
+.searchCity {
+    input {
+        width: 310px;
+        height: 30px;
+        background: none;
+        border: 1px solid rgb(173, 183, 235);
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 18px;
+        color: #fff;
+        text-align: center;
+
+        &::placeholder {
+            color: #fff;
+        }
+
+        &::active {
+            border: 1px solid rgb(45, 73, 231);
+            background: none;
+            color: #fff;
+        }
+    }
+
+    button {
+        width: 40px;
+        height: 30px;
+        padding: 5px;
+        background:  rgb(173, 183, 235);
+        border: 1px solid rgb(45, 73, 231);
+        border-radius: 6px;
+        color: #fff;
+
+        &:hover {
+            background: none;
+        }
+    }
+}

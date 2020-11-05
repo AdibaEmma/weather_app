@@ -65,4 +65,52 @@ body {
 .degree-section h2 {
   font-size: 2.5rem;
 }
+
+.searchCity input {
+  width: 310px;
+  height: 30px;
+  background: none;
+  border: 1px solid #adb7eb;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+}
+
+.searchCity input::-webkit-input-placeholder {
+  color: #fff;
+}
+
+.searchCity input:-ms-input-placeholder {
+  color: #fff;
+}
+
+.searchCity input::-ms-input-placeholder {
+  color: #fff;
+}
+
+.searchCity input::placeholder {
+  color: #fff;
+}
+
+.searchCity input::active {
+  border: 1px solid #2d49e7;
+  background: none;
+  color: #fff;
+}
+
+.searchCity button {
+  width: 40px;
+  height: 30px;
+  padding: 5px;
+  background: #adb7eb;
+  border: 1px solid #2d49e7;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.searchCity button:hover {
+  background: none;
+}
 /*# sourceMappingURL=main.css.map */
